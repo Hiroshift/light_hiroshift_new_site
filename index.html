@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiroshift - ポートフォリオサイト</title>
+    
+    <!-- Tailwind CSSの読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Poppins & Noto Sans JP) の読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Three.jsの読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* カスタムスタイル */
+        body {
+            font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+            background-color: #f3f4f6; /* slate-100 */
+            color: #1f2937; /* gray-800 */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* スクロール連動アニメーション用のクラス */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Three.jsのキャンバスを背景に固定 */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5; /* ユーザーの指定通りopacityを調整 */
+        }
+        /* ナビゲーションのアクティブ状態 */
+        nav a.active {
+            color: #10b981; /* emerald-500 */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Three.js アニメーション用キャンバス -->
+    <div id="bg-canvas"></div>
+
+    <!-- ヘッダー -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-bold tracking-wider text-gray-900">Hiroshift≈</a>
+            <nav class="hidden md:flex space-x-8 text-gray-600">
+                <a href="#profile" class="hover:text-emerald-500 transition-colors duration-300">Profile</a>
+                <a href="#portfolio" class="hover:text-emerald-500 transition-colors duration-300">Portfolio</a>
+                <a href="#blog" class="hover:text-emerald-500 transition-colors duration-300">Blog</a>
+                <a href="#services" class="hover:text-emerald-500 transition-colors duration-300">Services</a>
+                <a href="#contact" class="hover:text-emerald-500 transition-colors duration-300">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- モバイルメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#profile" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+            <a href="#portfolio" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Portfolio</a>
+            <a href="#blog" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Blog</a>
+            <a href="#services" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Services</a>
+            <a href="#contact" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Contact</a>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="relative z-10">
+        <!-- ① トップページ (Heroセクション) -->
+        <section id="hero" class="h-screen flex items-center justify-center text-center">
+            <div class="relative">
+                <h1 class="text-5xl md:text-8xl font-black uppercase tracking-tighter reveal">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-green-600">Hiroshift≈</span>
+                </h1>
+                <p class="mt-4 text-lg md:text-2xl text-slate-600 reveal font-light" style="transition-delay: 200ms;">
+                    Crafting Digital Realities
+                </p>
+                <div class="absolute -bottom-20 left-1/2 -translate-x-1/2 animate-bounce mt-8">
+                    <a href="#profile">
+                        <svg class="w-8 h-8 text-slate-500" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ② プロフィールページ (修正済み) -->
+        <section id="profile" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-xl reveal">
+                    <div class="text-center mb-16">
+                        <h2 class="text-5xl font-extrabold">Profile</h2>
+                        <p class="text-slate-500 mt-2 font-light">私について</p>
+                    </div>
+                    <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-12 items-center">
+                        <div class="md:col-span-1 flex justify-center">
+                            <img src="https://placehold.co/200x200/e5e7eb/1f2937?text=Hiro" alt="プロフィール画像" class="rounded-full w-48 h-48 object-cover border-4 border-white shadow-lg">
+                        </div>
+                        <div class="md:col-span-2 text-center md:text-left">
+                            <h3 class="text-3xl font-bold">Hiroshift≈</h3>
+                            <p class="text-emerald-600 mb-4 font-semibold">Web Application Developer</p>
+                            <p class="text-slate-600 leading-relaxed" style="font-family: 'Noto Sans JP', sans-serif;">
+                                Webアプリケーションの設計・開発を専門とする個人開発者です。
+                                フロントエンドからバックエンド、インフラまで幅広い技術スタックを用いて制作しています。
+                                現在はAI技術を取り入れた迅速なプロトタイプ開発を行い、実践的で効率的なWebサービス提供を目指しています。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-20">
+                        <h3 class="text-3xl font-bold text-center mb-10">Tech Stack</h3>
+                        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+                            <div class="text-center group" title="JavaScript">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=JS" alt="JavaScript" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                            <div class="text-center group" title="Ruby on Rails">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=Rails" alt="Ruby on Rails" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                            <div class="text-center group" title="MySQL">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=MySQL" alt="MySQL" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                             <div class="text-center group" title="AWS">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=AWS" alt="AWS" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                            <div class="text-center group" title="Heroku">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=Heroku" alt="Heroku" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                            <div class="text-center group" title="AI Tools (Gemini, etc.)">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=AI" alt="AI Tools" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ③ ポートフォリオページ -->
+        <section id="portfolio" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-5xl font-extrabold">Portfolio</h2>
+                    <p class="text-slate-500 mt-2 font-light">SaaSアプリケーション開発実績</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200">
+                        <div class="relative">
+                            <img src="images/portfolio_thumbnail_setsuyaku.png" alt="節約収入管理アプリ" class="w-full h-48 object-contain bg-slate-100">
+                            <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">節約収入管理</h3>
+                            <p class="text-slate-600 mt-2 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">家計管理と節約を支援するSaaSアプリ。</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">Ruby</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">Ruby on Rails</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200" style="transition-delay: 200ms;">
+                        <div class="relative">
+                            <img src="images/portfolio_thumbnail_woop.png" alt="WOOPアプリ" class="w-full h-48 object-contain bg-slate-100">
+                            <div class="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold">BETA</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">WOOP</h3>
+                            <p class="text-slate-600 mt-2 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">科学的に証明された目標達成メソッドアプリ。</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">HTML</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">CSS</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200" style="transition-delay: 400ms;">
+                        <div class="relative">
+                            <img src="images/portfolio_thumbnail_ukehi.png" alt="UKEHIアプリ" class="w-full h-48 object-contain bg-slate-100">
+                            <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">UKEHI</h3>
+                            <p class="text-slate-600 mt-2 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">2025年夏至点の宇宙的特異点を活用した誓いの宣言アプリ。</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">HTML</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">CSS</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ④ 提供可能なサービスページ -->
+        <section id="services" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-5xl font-extrabold">Services</h2>
+                    <p class="text-slate-500 mt-2 font-light">提供可能なサービス</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="reveal p-8 bg-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                        <div class="text-emerald-500 mb-4">
+                            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Webアプリ開発</h3>
+                        <p class="text-slate-600 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">企画・設計から開発・運用まで、一貫してサポートします。</p>
+                    </div>
+                    <div class="reveal p-8 bg-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" style="transition-delay: 200ms;">
+                        <div class="text-emerald-500 mb-4">
+                           <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3m6-7h3m-3 5h3m-3-1l-1-1-1 1M6 9l-1-1-1 1M6 15l-1 1-1-1m13-1l1 1 1-1m-3-5l1-1 1 1"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">AIプロトタイピング</h3>
+                        <p class="text-slate-600 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">AIツールを活用し、アイデアを迅速に形にします。</p>
+                    </div>
+                    <div class="reveal p-8 bg-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" style="transition-delay: 400ms;">
+                        <div class="text-emerald-500 mb-4">
+                           <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Webサイト制作</h3>
+                        <p class="text-slate-600 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">LPやポートフォリオなど、目的に合わせたサイトを制作します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑤ ブログセクション -->
+        <section id="blog" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-5xl font-extrabold">Blog</h2>
+                    <p class="text-slate-500 mt-2 font-light">技術記事・開発日記</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="blog-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-200">
+                        <img src="https://placehold.co/600x300/1f2937/f3f4f6?text=Blog+Post+1" alt="ブログ記事1" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">技術</span>
+                                <span class="text-slate-400 text-xs">2024.12.15</span>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">SaaS開発で学んだ3つの重要な教訓</h3>
+                            <p class="text-slate-600 text-sm mb-4" style="font-family: 'Noto Sans JP', sans-serif;">個人開発者としてSaaSアプリをリリースするまでに経験した技術的・ビジネス的課題について...</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                    <span class="text-slate-400 text-xs">note</span>
+                                </div>
+                                <a href="#" class="text-emerald-600 text-sm font-semibold hover:text-emerald-700">続きを読む →</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="blog-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-200" style="transition-delay: 200ms;">
+                        <img src="https://placehold.co/600x300/1f2937/f3f4f6?text=Blog+Post+2" alt="ブログ記事2" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">AI</span>
+                                <span class="text-slate-400 text-xs">2024.12.10</span>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">AIツールを活用した効率的な開発フロー</h3>
+                            <p class="text-slate-600 text-sm mb-4" style="font-family: 'Noto Sans JP', sans-serif;">ChatGPT、GitHub Copilot、Claudeを組み合わせた開発効率化の実践例...</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                    <span class="text-slate-400 text-xs">YouTube</span>
+                                </div>
+                                <a href="#" class="text-emerald-600 text-sm font-semibold hover:text-emerald-700">動画を見る →</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="blog-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-200" style="transition-delay: 400ms;">
+                        <img src="https://placehold.co/600x300/1f2937/f3f4f6?text=Blog+Post+3" alt="ブログ記事3" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">フロントエンド</span>
+                                <span class="text-slate-400 text-xs">2024.12.05</span>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">Next.js 14 App Router完全ガイド</h3>
+                            <p class="text-slate-600 text-sm mb-4" style="font-family: 'Noto Sans JP', sans-serif;">最新のNext.js App Routerを使ったモダンなWebアプリケーション開発手法...</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                    <span class="text-slate-400 text-xs">note</span>
+                                </div>
+                                <a href="#" class="text-emerald-600 text-sm font-semibold hover:text-emerald-700">続きを読む →</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="text-center mt-12 reveal">
+                    <a href="#" class="inline-block bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-8 rounded-full hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-emerald-300">
+                        すべての記事を見る
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑥ お問い合わせページ -->
+        <section id="contact" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-5xl font-extrabold">Contact</h2>
+                    <p class="text-slate-500 mt-2 font-light">お気軽にご相談ください</p>
+                </div>
+                <div class="max-w-2xl mx-auto reveal">
+                    <form action="#" method="POST" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-slate-700">お名前</label>
+                            <input type="text" name="name" id="name" class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-slate-700">メールアドレス</label>
+                            <input type="email" name="email" id="email" class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-slate-700">お問い合わせ内容</label>
+                            <textarea name="message" id="message" rows="4" class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"></textarea>
+                        </div>
+                        <div class="text-center pt-4">
+                            <button type="submit" class="inline-block bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-10 rounded-full hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-emerald-300">
+                                送信する
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ⑦ フッター -->
+    <footer class="py-8 bg-slate-200">
+        <div class="container mx-auto px-6 text-center text-slate-500">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="hover:text-emerald-600 transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#" class="hover:text-emerald-600 transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                </a>
+                <a href="#" class="hover:text-emerald-600 transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12.001c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12.001C22 6.477 17.523 2 12 2z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+            <p class="text-sm">&copy; 2025 Hiroshift. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- ポートフォリオ詳細モーダル -->
+    <div id="portfolio-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
+        <div id="modal-content" class="bg-white rounded-lg max-w-3xl w-full max-h-full overflow-y-auto relative">
+            <button id="modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-emerald-600">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="modal-body" class="p-8 md:p-12">
+                <!-- コンテンツはJSで動的に挿入されます -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Three.js 背景アニメーション (幾何学模様) ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('bg-canvas').appendChild(renderer.domElement);
+
+        const objects = [];
+        const geometry = new THREE.IcosahedronGeometry(1, 0); // 正二十面体
+        const material = new THREE.MeshBasicMaterial({ color: 0x059669, wireframe: true }); // 色を濃く変更 (emerald-600)
+
+        for (let i = 0; i < 80; i++) { // オブジェクトの数を増やす
+            const mesh = new THREE.Mesh(geometry, material);
+            
+            mesh.position.x = (Math.random() - 0.5) * 25;
+            mesh.position.y = (Math.random() - 0.5) * 25;
+            mesh.position.z = (Math.random() - 0.5) * 25;
+            
+            mesh.rotation.x = Math.random() * 2 * Math.PI;
+            mesh.rotation.y = Math.random() * 2 * Math.PI;
+            
+            const scale = Math.random() * 0.5 + 0.2; // スケールを大きくする
+            mesh.scale.set(scale, scale, scale);
+
+            objects.push(mesh);
+            scene.add(mesh);
+        }
+
+        camera.position.z = 5;
+
+        // マウス位置のトラッキング
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+
+        const clock = new THREE.Clock();
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+            
+            objects.forEach(obj => {
+                obj.rotation.x += 0.006; // 回転速度を少し上げる
+                obj.rotation.y += 0.006;
+            });
+
+            // マウスの位置に応じてカメラを少し動かす
+            camera.position.x += ((mouseX / window.innerWidth) * 2 - 1 - camera.position.x) * 0.05;
+            camera.position.y += (-(mouseY / window.innerHeight) * 2 + 1 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        };
+        animate();
+
+        // ウィンドウリサイズへの対応
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // --- スクロール連動アニメーション (Intersection Observer) ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+        
+        // --- モバイルメニューのトグル ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // --- ポートフォリオモーダル ---
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
+        const modal = document.getElementById('portfolio-modal');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
+
+        const portfolioData = [
+            {
+                title: '節約管理',
+                imgSrc: 'images/portfolio_thumbnail_setsuyaku.png',
+                description: '節約を支援するSaaSアプリケーション。私たちが得た収入は、日々の無意識な支出によって消えてしまいがちです。このアプリは、節約した金額を「収入」と捉え、さらにそれを「取り戻した時間」として可視化します。',
+                tech: 'Ruby, Ruby on Rails, PostgreSQL, Render',
+                url: 'https://setsuyaku-income.onrender.com',
+                status: 'LIVE',
+                users: '50+',
+                revenue: '無料アプリ'
+            },
+            {
+                title: 'WOOP',
+                imgSrc: 'images/portfolio_thumbnail_woop.png',
+                description: '科学的に証明されたWOOPメソッド（Wish-Outcome-Obstacle-Plan）を活用した目標達成アプリケーション。ユーザーが願望を明確にし、結果をイメージし、障害を特定し、具体的な計画を立てることで、より効果的に目標を達成できるようサポートします。',
+                tech: 'HTML, CSS, JavaScript',
+                url: 'https://hiroshift.github.io/woop/',
+                status: 'BETA',
+                users: '100+',
+                revenue: '無料アプリ'
+            },
+            {
+                title: 'UKEHI',
+                imgSrc: 'images/portfolio_thumbnail_ukehi.png',
+                description: '2025年夏至点の宇宙的特異点を活用した誓いの宣言アプリ。ユーザーが重要な誓いを立て、宇宙のエネルギーと共鳴させることで、より強い意志と決意を持って目標に向かうことができるユニークなアプリケーションです。',
+                tech: 'HTML, CSS, JavaScript',
+                url: 'https://hiroshift.github.io/ukehi/',
+                status: 'LIVE',
+                users: '300+',
+                revenue: '無料アプリ'
+            }
+        ];
+
+        portfolioCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                const data = portfolioData[index];
+                modalBody.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-3xl font-bold">${data.title}</h3>
+                        <span class="px-3 py-1 rounded-full text-sm font-bold ${
+                            data.status === 'LIVE' ? 'bg-emerald-100 text-emerald-800' :
+                            data.status === 'BETA' ? 'bg-blue-100 text-blue-800' :
+                            'bg-yellow-100 text-yellow-800'
+                        }">${data.status}</span>
+                    </div>
+                    <div class="bg-slate-100 rounded-lg mb-6 p-4">
+                        <img src="${data.imgSrc}" alt="${data.title}" class="w-full h-64 object-contain mx-auto">
+                    </div>
+                    <p class="text-slate-600 mb-6" style="font-family: 'Noto Sans JP', sans-serif;">${data.description}</p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <p class="text-sm text-slate-500">ユーザー数</p>
+                            <p class="text-lg font-bold text-emerald-600">${data.users}</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <p class="text-sm text-slate-500">月間売上</p>
+                            <p class="text-lg font-bold text-emerald-600">${data.revenue}</p>
+                        </div>
+                    </div>
+                    <p class="mb-6"><strong class="font-bold text-emerald-600">使用技術:</strong> ${data.tech}</p>
+                    <div class="flex gap-4">
+                    <a href="${data.url}" target="_blank" class="inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded-full hover:bg-emerald-700 transition-colors">サイトを見る</a>
+                        <button class="inline-block bg-slate-200 text-slate-700 font-bold py-2 px-6 rounded-full hover:bg-slate-300 transition-colors">デモを見る</button>
+                    </div>
+                `;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        });
+
+        // --- ナビゲーションのアクティブ状態更新 ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        const updateActiveLink = () => {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+
+        // --- ブログカードのクリック機能 ---
+        const blogCards = document.querySelectorAll('.blog-card');
+        blogCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                const blogUrls = [
+                    'https://note.com/hiroshift/n/n1234567890', // note記事
+                    'https://youtube.com/watch?v=example123',   // YouTube動画
+                    'https://note.com/hiroshift/n/n0987654321'  // note記事
+                ];
+                window.open(blogUrls[index], '_blank');
+            });
+        });
+
+    });
+    </script>
+</body>
+</html>
