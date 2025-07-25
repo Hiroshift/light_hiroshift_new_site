@@ -372,24 +372,25 @@
                     <p class="text-slate-500 mt-2 font-light">お気軽にご相談ください</p>
                 </div>
                 <div class="max-w-2xl mx-auto reveal">
-                    <form action="#" method="POST" class="space-y-6">
+                    <form id="contact-form" class="space-y-6">
                         <div>
                             <label for="name" class="block text-sm font-medium text-slate-700">お名前</label>
-                            <input type="text" name="name" id="name" class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
+                            <input type="text" name="name" id="name" required class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-slate-700">メールアドレス</label>
-                            <input type="email" name="email" id="email" class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
+                            <input type="email" name="email" id="email" required class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
                         </div>
                         <div>
                             <label for="message" class="block text-sm font-medium text-slate-700">お問い合わせ内容</label>
-                            <textarea name="message" id="message" rows="4" class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"></textarea>
+                            <textarea name="message" id="message" rows="4" required class="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"></textarea>
                         </div>
                         <div class="text-center pt-4">
-                            <button type="submit" class="inline-block bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-10 rounded-full hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-emerald-300">
+                            <button type="submit" id="submit-btn" class="inline-block bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-10 rounded-full hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-emerald-300">
                                 送信する
                             </button>
                         </div>
+                        <div id="form-message" class="text-center hidden"></div>
                     </form>
                 </div>
             </div>
@@ -541,7 +542,7 @@
             },
             {
                 title: 'パーソナル行動指針ジェネレーター',
-                imgSrc: 'images/portfolio_thumbnail_principle-generator-.png',
+                imgSrc: 'images/portfolio_thumbnail_principle-generator.png',
                 description: 'ナポレオン・ヒルの哲学に基づく個人向け行動指針生成アプリ。音声機能付きで、ユーザーが自分の名前を入力すると、専用の行動指針書を自動生成します。',
                 tech: 'HTML/CSS, JavaScript, Web Speech API, GitHub Pages',
                 url: 'https://hiroshift.github.io/principle-generator-/',
@@ -666,6 +667,54 @@
                 window.open(blogUrls[index], '_blank');
             });
         });
+
+        // --- コンタクトフォームの送信機能 ---
+        const contactForm = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formMessage = document.getElementById('form-message');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // ボタンを無効化
+                submitBtn.disabled = true;
+                submitBtn.textContent = '送信中...';
+                
+                const formData = new FormData(contactForm);
+                
+                try {
+                    const response = await fetch('contact.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    // メッセージ表示
+                    formMessage.className = `text-center ${result.success ? 'text-emerald-600' : 'text-red-600'} font-semibold`;
+                    formMessage.textContent = result.message;
+                    formMessage.classList.remove('hidden');
+                    
+                    if (result.success) {
+                        // フォームをリセット
+                        contactForm.reset();
+                        // 3秒後にメッセージを非表示
+                        setTimeout(() => {
+                            formMessage.classList.add('hidden');
+                        }, 3000);
+                    }
+                } catch (error) {
+                    formMessage.className = 'text-center text-red-600 font-semibold';
+                    formMessage.textContent = 'エラーが発生しました。';
+                    formMessage.classList.remove('hidden');
+                } finally {
+                    // ボタンを有効化
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '送信する';
+                }
+            });
+        }
 
     });
     </script>
