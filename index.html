@@ -62,6 +62,40 @@
             color: #10b981; /* emerald-500 */
             font-weight: 700;
         }
+        
+        /* フィルターボタンのスタイル */
+        .filter-btn {
+            transition: all 0.3s ease;
+            background-color: #f1f5f9;
+            color: #64748b;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        .filter-btn:hover:not(.active) {
+            background-color: #d1fae5;
+            color: #047857;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+        }
+        
+        /* ポートフォリオカードのアニメーション */
+        .portfolio-card {
+            transition: all 0.2s ease;
+            transform: translateY(0);
+        }
+        .portfolio-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .portfolio-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -169,10 +203,27 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 reveal">
                     <h2 class="text-5xl font-extrabold">Portfolio</h2>
-                    <p class="text-slate-500 mt-2 font-light">SaaSアプリケーション開発実績</p>
+                    <p class="text-slate-500 mt-2 font-light">開発実績</p>
                 </div>
+                
+                <!-- フィルターボタン -->
+                <div class="flex flex-wrap gap-3 mb-8 justify-center reveal">
+                    <button class="filter-btn active px-6 py-3 rounded-full font-semibold" data-filter="all">
+                        すべての実績
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-full font-semibold" data-filter="saas">
+                        SaaSアプリ
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-full font-semibold" data-filter="web">
+                        Webサイト
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-full font-semibold" data-filter="ec">
+                        ECサイト
+                    </button>
+                </div>
+                
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="ec">
                         <div class="relative">
                             <img src="images/portfolio_thumbnail_furima.png" alt="FURIMA ECサイト" class="w-full h-48 object-contain bg-slate-100">
                             <div class="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold">BETA</div>
@@ -188,7 +239,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200" style="transition-delay: 200ms;">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="saas">
                         <div class="relative">
                             <img src="images/portfolio_thumbnail_principle-generator-.png" alt="パーソナル行動指針ジェネレーター" class="w-full h-48 object-contain bg-slate-100">
                             <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
@@ -204,7 +255,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200" style="transition-delay: 400ms;">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="saas">
                         <div class="relative">
                             <img src="images/portfolio_thumbnail_setsuyaku.png" alt="節約収入管理アプリ" class="w-full h-48 object-contain bg-slate-100">
                             <div class="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold">BETA</div>
@@ -219,7 +270,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200" style="transition-delay: 600ms;">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="saas">
                         <div class="relative">
                             <img src="images/portfolio_thumbnail_woop.png" alt="WOOPアプリ" class="w-full h-48 object-contain bg-slate-100">
                             <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
@@ -234,7 +285,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-200" style="transition-delay: 800ms;">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="saas">
                         <div class="relative">
                             <img src="images/portfolio_thumbnail_ukehi.png" alt="UKEHIアプリ" class="w-full h-48 object-contain bg-slate-100">
                             <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
@@ -246,6 +297,22 @@
                                 <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">HTML</span>
                                 <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">CSS</span>
                                 <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="web">
+                        <div class="relative">
+                            <img src="images/portfolio_thumbnail_nakamachi-print.png" alt="株式会社中町印刷" class="w-full h-48 object-contain bg-slate-100">
+                            <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">株式会社中町印刷</h3>
+                            <p class="text-slate-600 mt-2 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">印刷会社のコーポレートサイト。最新設備紹介とサービス案内。</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">HTML</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">CSS</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">JavaScript</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">レスポンシブ</span>
                             </div>
                         </div>
                     </div>
@@ -579,6 +646,16 @@
                 status: 'LIVE',
                 users: 'プロトタイプ',
                 revenue: '無料アプリ'
+            },
+            {
+                title: '株式会社中町印刷',
+                imgSrc: 'images/portfolio_thumbnail_nakamachi-print.png',
+                description: '印刷会社のコーポレートサイト。最新のLITHRONE G37印刷機の紹介や、UV印刷、抜き加工などの多様な印刷サービスを紹介。歴史と革新を融合させた印刷ソリューションを提供する企業のブランディングサイトです。',
+                tech: 'HTML, CSS, JavaScript, レスポンシブ対応',
+                url: 'http://nakamachi-print.jp/',
+                status: 'LIVE',
+                users: '企業サイト',
+                revenue: 'コーポレートサイト'
             }
         ];
 
@@ -665,6 +742,27 @@
                     'https://zenn.dev/hiroshift'  // Zennアカウント（技術記事）
                 ];
                 window.open(blogUrls[index], '_blank');
+            });
+        });
+
+        // --- ポートフォリオフィルター ---
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+                portfolioItems.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filterValue === 'all' || category === filterValue) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
             });
         });
 
