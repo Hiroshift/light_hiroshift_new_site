@@ -220,9 +220,30 @@
                     <button class="filter-btn px-6 py-3 rounded-full font-semibold" data-filter="ec">
                         ECサイト
                     </button>
+                    <button class="filter-btn px-6 py-3 rounded-full font-semibold" data-filter="creative">
+                        クリエイティブ
+                    </button>
                 </div>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="creative">
+                        <div class="relative">
+                            <img src="images/portfolio_thumbnail_makemehappy.png" alt="Make me happy YouTube Shorts" class="w-full h-48 object-contain bg-slate-100">
+                            <div class="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">LIVE</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">Make me happy</h3>
+                            <p class="text-slate-600 mt-2 text-sm" style="font-family: 'Noto Sans JP', sans-serif;">生成AIの進化を体験するYouTube Shortsチャンネル。Canvaを使ったクリエイティブ制作。</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">YouTube Shorts</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">Canva</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">生成AI</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">Veo3・FLOW</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">Sora</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">動画制作</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="portfolio-card reveal bg-slate-50 rounded-lg overflow-hidden group cursor-pointer border border-slate-200" data-category="ec">
                         <div class="relative">
                             <img src="images/portfolio_thumbnail_furima.png" alt="FURIMA ECサイト" class="w-full h-48 object-contain bg-slate-100">
@@ -597,6 +618,16 @@
         const modalClose = document.getElementById('modal-close');
 
         const portfolioData = [
+            {
+                title: 'Make me happy',
+                imgSrc: 'images/portfolio_thumbnail_makemehappy.png',
+                description: '3年間継続中のYouTube Shortsチャンネル。生成AIの進化（要約→画像生成→動画生成）を実際に体験し、Canvaを使ったクリエイティブ制作を行っています。自分の好きをカタチにすることを目的とした、AI技術の実践的活用チャンネルです。',
+                tech: 'YouTube Shorts, Canva, 生成AI, 動画制作, クリエイティブ',
+                url: 'https://www.youtube.com/@makemehappy818',
+                status: 'LIVE',
+                users: '3年間継続',
+                revenue: 'クリエイティブ制作'
+            },
             {
                 title: 'FURIMA',
                 imgSrc: 'images/portfolio_thumbnail_furima.png',
