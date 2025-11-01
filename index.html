@@ -57,10 +57,15 @@
             z-index: -1;
             opacity: 0.5; /* ユーザーの指定通りopacityを調整 */
         }
-        /* ナビゲーションのアクティブ状態 */
-        nav a.active {
+        /* ナビゲーションのアクティブ状態（Contactボタンを除く） */
+        nav a.active:not([href="#contact"]) {
             color: #10b981; /* emerald-500 */
             font-weight: 700;
+        }
+        
+        /* Contactボタンは常に白いテキストを維持 */
+        nav a[href="#contact"] {
+            color: white !important;
         }
         
         /* フィルターボタンのスタイル */
@@ -107,12 +112,12 @@
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#hero" class="text-2xl font-bold tracking-wider text-gray-900">Hiroshift≈</a>
-            <nav class="hidden md:flex space-x-8 text-gray-600">
+            <nav class="hidden md:flex space-x-8 items-center text-gray-600">
                 <a href="#profile" class="hover:text-emerald-500 transition-colors duration-300">Profile</a>
                 <a href="#portfolio" class="hover:text-emerald-500 transition-colors duration-300">Portfolio</a>
                 <a href="#blog" class="hover:text-emerald-500 transition-colors duration-300">Blog</a>
                 <a href="#services" class="hover:text-emerald-500 transition-colors duration-300">Services</a>
-                <a href="#contact" class="hover:text-emerald-500 transition-colors duration-300">Contact</a>
+                <a href="#contact" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold py-2 px-6 rounded-full hover:scale-105 transform transition-all duration-300 shadow-md hover:shadow-emerald-300">Contact</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden focus:outline-none text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -124,7 +129,7 @@
             <a href="#portfolio" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Portfolio</a>
             <a href="#blog" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Blog</a>
             <a href="#services" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Services</a>
-            <a href="#contact" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Contact</a>
+            <a href="#contact" class="block py-3 px-6 text-sm text-center bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold hover:opacity-90">Contact</a>
         </div>
     </header>
 
@@ -154,7 +159,7 @@
             <div class="container mx-auto px-6">
                 <div class="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-xl reveal">
                     <div class="text-center mb-16">
-                        <h2 class="text-5xl font-extrabold">Profile</h2>
+                        <h2 class="text-5xl font-extrabold">About</h2>
                         <p class="text-slate-500 mt-2 font-light">私について</p>
                     </div>
                     <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-12 items-center">
@@ -174,23 +179,23 @@
                     <div class="mt-20">
                         <h3 class="text-3xl font-bold text-center mb-10">Tech Stack</h3>
                         <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                            <div class="text-center group" title="JavaScript">
-                                <img src="https://placehold.co/80x80/10b981/ffffff?text=JS" alt="JavaScript" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            <div class="text-center group" title="AI Tools (Gemini, etc.)">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=AI" alt="AI Tools" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
                             </div>
                             <div class="text-center group" title="Ruby on Rails">
                                 <img src="https://placehold.co/80x80/10b981/ffffff?text=Rails" alt="Ruby on Rails" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
                             </div>
+                            <div class="text-center group" title="Figma">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=Figma" alt="Figma" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
+                            <div class="text-center group" title="AWS">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=AWS" alt="AWS" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            </div>
                             <div class="text-center group" title="MySQL">
                                 <img src="https://placehold.co/80x80/10b981/ffffff?text=MySQL" alt="MySQL" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
                             </div>
-                             <div class="text-center group" title="AWS">
-                                <img src="https://placehold.co/80x80/10b981/ffffff?text=AWS" alt="AWS" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
-                            </div>
-                            <div class="text-center group" title="Heroku">
-                                <img src="https://placehold.co/80x80/10b981/ffffff?text=Heroku" alt="Heroku" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
-                            </div>
-                            <div class="text-center group" title="AI Tools (Gemini, etc.)">
-                                <img src="https://placehold.co/80x80/10b981/ffffff?text=AI" alt="AI Tools" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
+                            <div class="text-center group" title="JavaScript">
+                                <img src="https://placehold.co/80x80/10b981/ffffff?text=JS" alt="JavaScript" class="w-20 h-20 rounded-full bg-white shadow-md transition-all duration-300 group-hover:shadow-emerald-300 group-hover:shadow-lg group-hover:-translate-y-1 cursor-pointer">
                             </div>
                         </div>
                     </div>
